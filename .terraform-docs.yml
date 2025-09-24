@@ -1,0 +1,96 @@
+formatter: markdown table
+
+# Header
+header-from: README.md
+footer-from: ""
+
+# Content
+content: |
+  ## Features
+
+  This module creates the following BaiduCloud resources:
+
+  - **VPC** - Virtual Private Cloud
+  - **Subnets** - Private and public subnets
+  - **Internet Gateway** - For public subnet internet access
+  - **NAT Gateway** - For private subnet internet access
+  - **Route Tables** - For routing traffic
+  - **Security Groups** - Default security group
+  - **Network ACLs** - Optional network-level security
+
+  ## Usage
+
+  ### Complete Example
+
+  ```hcl
+  module "vpc" {
+    source = "terraform-baiducloud-modules/vpc/baiducloud"
+
+    name = "example-vpc"
+    cidr = "10.0.0.0/16"
+
+    availability_zones = ["bj-a", "bj-b", "bj-c"]
+    private_subnets    = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+    public_subnets     = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+
+    enable_nat_gateway = true
+    create_security_group = true
+    create_network_acl = false
+
+    tags = {
+      Terraform = "true"
+      Environment = "dev"
+    }
+  }
+  ```
+
+  ### Simple Example
+
+  ```hcl
+  module "vpc" {
+    source = "terraform-baiducloud-modules/vpc/baiducloud"
+
+    name = "simple-vpc"
+    cidr = "10.0.0.0/16"
+
+    availability_zones = ["bj-a", "bj-b"]
+    private_subnets    = ["10.0.1.0/24", "10.0.2.0/24"]
+    public_subnets     = ["10.0.101.0/24", "10.0.102.0/24"]
+
+    enable_nat_gateway = false
+    create_security_group = true
+  }
+  ```
+
+  ## Examples
+
+  - [Complete VPC](examples/complete) - VPC with NAT Gateway, security groups, and network ACLs
+  - [Simple VPC](examples/simple) - Basic VPC with public and private subnets
+
+  ## License
+
+  Apache 2 Licensed. See LICENSE for full details.
+
+# Sections
+sections:
+  hide:
+    - ""
+  show:
+    - requirements
+    - providers
+    - inputs
+    - outputs
+
+# Sort
+sort:
+  enabled: true
+  by: required
+
+# Output
+output:
+  file: README.md
+  mode: inject
+  template: |
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
