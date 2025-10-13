@@ -25,7 +25,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
@@ -46,7 +46,7 @@ jobs:
           soft_fail: true
 
       - name: Upload Checkov results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'checkov-results.sarif'
@@ -67,7 +67,7 @@ jobs:
           output: 'trivy-deps-results.sarif'
 
       - name: Upload Trivy dependency scan results
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: 'trivy-deps-results.sarif'
